@@ -1,70 +1,42 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.24;
 
-contract B2 {
-    string public name = "B2";
-    string public symbol = "B2";
-    uint8 public decimals = 18;
-    uint256 public totalSupply = 21000000 * 10**uint256(decimals);
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.1/contracts/token/ERC20/ERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.1/contracts/access/Ownable.sol";
 
-    address public owner;
+contract B2 is ERC20, Ownable {
     uint256 public taxPercent = 4;
     uint256 public burnPercent = 1;
     address public taxWallet;
 
-    mapping(address => uint256) public balanceOf;
-    mapping(address => mapping(address => uint256)) public allowance;
-
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-
-    constructor(address _taxWallet) {
-        owner = msg.sender;
+    constructor(address _taxWallet) ERC20("B2", "B2") Ownable(msg.sender) {
+        _mint(msg.sender, 21_000_000 * 10 ** decimals());
         taxWallet = _taxWallet;
-        balanceOf[msg.sender] = totalSupply;
     }
 
-    function transfer(address to, uint256 value) public returns (bool success) {
-        require(balanceOf[msg.sender] >= value, "Insufficient balance");
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
+        address sender = _msgSender();
+        uint256 taxAmount = (amount * taxPercent) / 100;
+        uint256 burnAmount = (amount * burnPercent) / 100;
+        uint256 finalAmount = amount - taxAmount - burnAmount;
 
-        uint256 taxAmount = (value * taxPercent) / 100;
-        uint256 burnAmount = (value * burnPercent) / 100;
-        uint256 finalAmount = value - taxAmount - burnAmount;
-
-        balanceOf[msg.sender] -= value;
-        balanceOf[to] += finalAmount;
-        balanceOf[taxWallet] += taxAmount;
-        totalSupply -= burnAmount;
-
-        emit Transfer(msg.sender, to, finalAmount);
-        emit Transfer(msg.sender, taxWallet, taxAmount);
-        emit Transfer(msg.sender, address(0), burnAmount);
+        _transfer(sender, taxWallet, taxAmount);
+        _burn(sender, burnAmount);
+        _transfer(sender, recipient, finalAmount);
         return true;
     }
 
-    function approve(address spender, uint256 value) public returns (bool success) {
-        allowance[msg.sender][spender] = value;
-        emit Approval(msg.sender, spender, value);
-        return true;
-    }
+    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {
+        uint256 taxAmount = (amount * taxPercent) / 100;
+        uint256 burnAmount = (amount * burnPercent) / 100;
+        uint256 finalAmount = amount - taxAmount - burnAmount;
 
-    function transferFrom(address from, address to, uint256 value) public returns (bool success) {
-        require(balanceOf[from] >= value, "Insufficient balance");
-        require(allowance[from][msg.sender] >= value, "Allowance exceeded");
+        address spender = _msgSender();
+        _spendAllowance(sender, spender, amount);
 
-        uint256 taxAmount = (value * taxPercent) / 100;
-        uint256 burnAmount = (value * burnPercent) / 100;
-        uint256 finalAmount = value - taxAmount - burnAmount;
-
-        balanceOf[from] -= value;
-        allowance[from][msg.sender] -= value;
-        balanceOf[to] += finalAmount;
-        balanceOf[taxWallet] += taxAmount;
-        totalSupply -= burnAmount;
-
-        emit Transfer(from, to, finalAmount);
-        emit Transfer(from, taxWallet, taxAmount);
-        emit Transfer(from, address(0), burnAmount);
+        _transfer(sender, taxWallet, taxAmount);
+        _burn(sender, burnAmount);
+        _transfer(sender, recipient, finalAmount);
         return true;
     }
 }
