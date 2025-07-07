@@ -35,6 +35,14 @@ B2 is a deflationary utility token on BNB Smart Chain, designed for decentralize
 
 ---
 
+## 📄 Whitepaper
+
+[View Whitepaper (PDF)](https://github.com/B2-Token/B2/blob/main/docs/B2_Whitepaper.pdf)
+
+The whitepaper explains B2's mission, deflationary design, security model, and long-term vision. It provides all the essential details for investors and community members.
+
+---
+
 ## 🗺 Roadmap
 
 - ✅ Contract deployed & verified
