@@ -29,7 +29,7 @@ B2 is a deflationary utility token on BNB Smart Chain, designed for decentralize
 ## 🔗 Official Links
 
 - [Notion Public Page](https://hissing-juniper-1e6.notion.site/B2-Token-Official-Public-Page-229540cf787680d6a772dcb76d4fcc54)
-- [Twitter](https://x.com/b2token)
+- [Twitter (X)](https://x.com/b2token)
 - Email: b2coin.token@gmail.com
 - Telegram Channel: https://t.me/b2token
 
