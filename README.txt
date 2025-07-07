@@ -1,28 +1,35 @@
-REMIX DEFAULT WORKSPACE
+# B2 Token
 
-Remix default workspace is present when:
-i. Remix loads for the very first time 
-ii. A new workspace is created with 'Default' template
-iii. There are no files existing in the File Explorer
+B2 is a deflationary utility token on BNB Smart Chain, designed for decentralized applications and platforms.
 
-This workspace contains 3 directories:
+## ✨ Overview
 
-1. 'contracts': Holds three contracts with increasing levels of complexity.
-2. 'scripts': Contains four typescript files to deploy a contract. It is explained below.
-3. 'tests': Contains one Solidity test file for 'Ballot' contract & one JS test file for 'Storage' contract.
+- **Max supply:** 21,000,000 B2
+- **Tax:** 4% on every transfer
+- **Burn:** 1% on every transfer
+- **Chain:** BNB Smart Chain (BEP20)
 
-SCRIPTS
+## 💼 Wallet Transparency
 
-The 'scripts' folder has four typescript files which help to deploy the 'Storage' contract using 'web3.js' and 'ethers.js' libraries.
+- **Deployer:** 0xc1eeba5f1d4cf00b7871a05663B890cf2C10a187
+- **Vault:** 0x1b6e2676911F40B7754572A166A54cB2Cbb5d72e
+- **Founder Reserve:** 0x56Cd9120B63c9a07e45Fd2ef6729BA447c85Ed74
 
-For the deployment of any other contract, just update the contract name from 'Storage' to the desired contract and provide constructor arguments accordingly 
-in the file `deploy_with_ethers.ts` or  `deploy_with_web3.ts`
+## 🔗 Official Links
 
-In the 'tests' folder there is a script containing Mocha-Chai unit tests for 'Storage' contract.
+- [Notion Public Page](https://hissing-juniper-1e6.notion.site/B2-Token-Official-Public-Page-229540cf787680d6a772dcb76d4fcc54)
+- [Twitter](https://x.com/b2token)
+- Email: b2coin.token@gmail.com
 
-To run a script, right click on file name in the file explorer and click 'Run'. Remember, Solidity file must already be compiled.
-Output from script will appear in remix terminal.
+## 🗺 Roadmap
 
-Please note, require/import is supported in a limited manner for Remix supported modules.
-For now, modules supported by Remix are ethers, web3, swarmgw, chai, multihashes, remix and hardhat only for hardhat.ethers object/plugin.
-For unsupported modules, an error like this will be thrown: '<module_name> module require is not supported by Remix IDE' will be shown.
+- ✅ Contract deployed & verified
+- ✅ Initial wallet allocations
+- 🔜 Launch liquidity pool on PancakeSwap
+- 🔜 Expand community & marketing
+
+---
+
+## 📄 License
+
+MIT
