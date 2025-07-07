@@ -19,13 +19,6 @@ B2 is a deflationary utility token on BNB Smart Chain, designed for decentralize
 
 ---
 
-## 🖼 Logos
-
-- [32x32 PNG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/main/B2_logo_32x32_square.png)
-- [SVG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/main/B2_logo.svg)
-
----
-
 ## 🔗 Official Links
 
 - [Notion Public Page](https://hissing-juniper-1e6.notion.site/B2-Token-Official-Public-Page-229540cf787680d6a772dcb76d4fcc54)
@@ -49,6 +42,13 @@ The whitepaper explains B2's mission, deflationary design, security model, and l
 - ✅ Initial wallet allocations
 - 🔜 Launch liquidity pool on PancakeSwap
 - 🔜 Expand community & marketing
+
+---
+
+## 🖼 Logos
+
+- [32x32 PNG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/main/B2_logo_32x32_square.png)
+- [SVG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/main/B2_logo.svg)
 
 ---
 
