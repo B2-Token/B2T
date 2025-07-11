@@ -39,22 +39,15 @@ With a fixed supply of 21 million tokens, B2 is designed to incentivize long-ter
 - [X](https://x.com/b2token)
 - [Telegram](https://t.me/b2token)
 - [GitHub](https://github.com/B2-Token/B2)
+- [Whitepaper](https://github.com/B2-Token/B2/blob/main/docs/B2_Whitepaper.pdf)
 - Email: contact@b2token.org
-
----
-
-## 📄 Whitepaper
-
-[View Whitepaper (PDF)](https://github.com/B2-Token/B2/blob/main/docs/B2_Whitepaper.pdf)
-
-The whitepaper explains B2's mission, deflationary design, security model, and long-term vision. It provides all the essential details for investors and community members.
 
 ---
 
 ## 🖼 Logos
 
-- [32x32 PNG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/main/B2_logo_32x32_square.png)
-- [SVG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/main/B2_logo.svg)
+- [PNG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/main/B2_logo.png)
+- [SVG Logo](https://raw.githubusercontent.com/B2-Token/b2token-assets/refs/heads/main/B2_Logo.svg)
 
 ---
 
