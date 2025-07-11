@@ -40,7 +40,7 @@ With a fixed supply of 21 million tokens, B2 is designed to incentivize long-ter
 - [Telegram](https://t.me/b2token)
 - [GitHub](https://github.com/B2-Token/B2)
 - [Whitepaper](https://github.com/B2-Token/B2/blob/main/docs/B2_Whitepaper.pdf)
-- Email: contact@b2token.org
+- [Email](mailto:contact@b2token.org)
 
 ---
 
