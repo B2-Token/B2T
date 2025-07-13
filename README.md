@@ -10,17 +10,18 @@ With a fixed supply of 21 million tokens, B2 is designed to incentivize long-ter
 - **Tax:** 4% on every transfer
 - **Burn:** 1% on every transfer
 - **Chain:** BNB Smart Chain (BEP20)
-- **Contract address:** 0x8fc4815EAd6d8d0ec93D6132f14c5E9eC85dfFae
+- **Contract address:** [0x8fc4815EAd6d8d0ec93D6132f14c5E9eC85dfFae](https://bscscan.com/token/0x8fc4815EAd6d8d0ec93D6132f14c5E9eC85dfFae)
 - **No minting:** Fixed supply, no additional tokens can ever be minted
 
 ---
 
 ## 💼 Official Wallets
 
-- **Liquidity:** 0xc1eeba5f1d4cf00b7871a05663B890cf2C10a187 (Seeded with initial BNB/B2 pairing to provide trading liquidity)
+- **Deployer:** 0xc1eeba5f1d4cf00b7871a05663B890cf2C10a187
 - **Vault:** 0x1b6e2676911F40B7754572A166A54cB2Cbb5d72e (Reserved for future liquidity additions, potential partnerships, and emergency funding)
 - **Founder Reserve:** 0x56Cd9120B63c9a07e45Fd2ef6729BA447c85Ed74 (Set aside as a long-term incentive for project growth and alignment)
 - **Tax Wallet:** 0xEce40D86917b7f77D0BbEeC1F870000A98a1a27A
+
 ---
 
 ## 🗺 Roadmap
