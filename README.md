@@ -36,10 +36,11 @@ With a fixed supply of 21 million tokens and no minting, B2T incentivizes long-t
 ## 🔗 Official Links
 
 - [Website](https://b2token.org)
-- [X](https://x.com/b2token)
-- [Telegram](https://t.me/b2token)
 - [GitHub](https://github.com/B2-Token/B2T)
 - [Whitepaper](https://github.com/B2-Token/B2T/blob/main/docs/B2T_Whitepaper.pdf)
+- [X](https://x.com/b2token)
+- [Telegram](https://t.me/b2token)
+- [Reddit Community](https://www.reddit.com/r/B2Token/)
 - [Email](mailto:contact@b2token.org)
 
 ---
