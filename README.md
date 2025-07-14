@@ -1,13 +1,13 @@
 # B2 Token
 
-B2 Token is a deflationary utility token deployed on BNB Smart Chain. Inspired by the iconic B-2 Spirit stealth bomber, it combines simplicity and strength, aiming to build a community-driven ecosystem.
+B2 Token (B2T) is a fully deflationary utility token deployed on BNB Smart Chain. Inspired by the iconic B-2 Spirit, it combines simplicity and strength to build a community-driven ecosystem.
 
-With a fixed supply of 21 million tokens, B2 is designed to incentivize long-term holding and reduce circulating supply over time through built-in deflationary mechanics.
+With a fixed supply of 21 million tokens and no minting, B2T incentivizes long-term holding and reduces circulating supply over time through a built-in 1% burn on every transfer. There is no transaction tax, ensuring frictionless trading and maximum investor confidence.
 
 ## ✨ Overview
 
 - **Max supply:** 21,000,000 B2
-- **Tax:** 4% on every transfer
+- **Tax:** 0% (No transaction tax)
 - **Burn:** 1% on every transfer
 - **Chain:** BNB Smart Chain (BEP20)
 - **Contract address:** [0x8fc4815EAd6d8d0ec93D6132f14c5E9eC85dfFae](https://bscscan.com/token/0x8fc4815EAd6d8d0ec93D6132f14c5E9eC85dfFae)
@@ -20,7 +20,6 @@ With a fixed supply of 21 million tokens, B2 is designed to incentivize long-ter
 - **Deployer:** 0xc1eeba5f1d4cf00b7871a05663B890cf2C10a187
 - **Vault:** 0x1b6e2676911F40B7754572A166A54cB2Cbb5d72e (Reserved for future liquidity additions, potential partnerships, and emergency funding)
 - **Founder Reserve:** 0x56Cd9120B63c9a07e45Fd2ef6729BA447c85Ed74 (Set aside as a long-term incentive for project growth and alignment)
-- **Tax Wallet:** 0xEce40D86917b7f77D0BbEeC1F870000A98a1a27A
 
 ---
 
