@@ -1,103 +1,171 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-/// @title B2 Token (B2T)
-/// @notice A deflationary utility token on BNB Smart Chain with fixed supply, tax, and burn mechanics
+/**
+ * B2 Token (B2T)
+ *
+ * Key properties:
+ * - Fixed supply: 21,000,000 B2T (18 decimals), minted to deployer at construction.
+ * - No tax (no tax wallet).
+ * - Transfer burn in basis points (bps). Example: 100 = 1.00%. Capped by MAX_BURN_BPS.
+ * - Fee exemptions for specific addresses (e.g., deployer, vault, founder, LP pair) to avoid burn on setup flows.
+ * - finalize(): permanently locks parameter changes (burn bps + fee exemptions).
+ * - Simple ownership (transfer/renounce).
+ * - Rescue function for non-B2T tokens accidentally sent to the contract.
+ */
+
+interface IERC20Minimal {
+    function transfer(address to, uint256 amount) external returns (bool);
+}
+
 contract B2T {
+    // --- ERC20 metadata ---
     string public name = "B2 Token";
     string public symbol = "B2T";
-    uint8 public decimals = 18;
-    uint256 public totalSupply = 21000000 * 10**uint256(decimals);
+    uint8  public decimals = 18;
 
+    // --- ERC20 totals ---
+    uint256 public totalSupply;
+
+    // --- Ownership / controls ---
     address public owner;
-    uint256 public taxPercent = 4;
-    uint256 public burnPercent = 1;
-    address public taxWallet;
+    bool    public finalized;
 
+    // --- Burn configuration ---
+    // burnBps: basis points (bps). 100 = 1.00%, 1 = 0.01%
+    uint256 public burnBps = 100;                // default 1.00%
+    uint256 public constant MAX_BURN_BPS = 100;  // max 1.00%
+
+    // Addresses exempt from burn on transfers
+    mapping(address => bool) public isFeeExempt;
+
+    // --- ERC20 storage ---
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
 
+    // --- Events ---
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Approval(address indexed tokenOwner, address indexed spender, uint256 value);
 
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event BurnBpsUpdated(uint256 oldBps, uint256 newBps);
+    event FeeExemptUpdated(address indexed account, bool isExempt);
+    event Finalized();
+
+    // --- Modifiers ---
     modifier onlyOwner() {
         require(msg.sender == owner, "Not owner");
         _;
     }
 
-    /// @notice Initializes contract and mints total supply to deployer
-    /// @param _taxWallet Address where tax fees are collected
-    constructor(address _taxWallet) {
+    // --- Constructor ---
+    constructor() {
         owner = msg.sender;
-        taxWallet = _taxWallet;
-        balanceOf[msg.sender] = totalSupply;
+        emit OwnershipTransferred(address(0), msg.sender);
+
+        // Mint full supply to deployer
+        uint256 supply = 21_000_000 * (10 ** uint256(decimals));
+        totalSupply = supply;
+        balanceOf[msg.sender] = supply;
+        emit Transfer(address(0), msg.sender, supply);
+
+        // Deployer is exempt by default (to move initial allocations without burn)
+        isFeeExempt[msg.sender] = true;
+        emit FeeExemptUpdated(msg.sender, true);
     }
 
-    /// @notice Transfer tokens to another address applying tax and burn
-    /// @param to Recipient address
-    /// @param value Amount to transfer
-    function transfer(address to, uint256 value) public returns (bool success) {
-        require(balanceOf[msg.sender] >= value, "Insufficient balance");
-
-        uint256 taxAmount = (value * taxPercent) / 100;
-        uint256 burnAmount = (value * burnPercent) / 100;
-        uint256 finalAmount = value - taxAmount - burnAmount;
-
-        balanceOf[msg.sender] -= value;
-        balanceOf[to] += finalAmount;
-        balanceOf[taxWallet] += taxAmount;
-        totalSupply -= burnAmount;
-
-        emit Transfer(msg.sender, to, finalAmount);
-        emit Transfer(msg.sender, taxWallet, taxAmount);
-        emit Transfer(msg.sender, address(0), burnAmount);
-        return true;
+    // --- Ownership ---
+    function transferOwnership(address newOwner) external onlyOwner {
+        require(newOwner != address(0), "Zero address");
+        emit OwnershipTransferred(owner, newOwner);
+        owner = newOwner;
     }
 
-    /// @notice Approve spender to transfer tokens on your behalf
-    /// @param spender Address authorized to spend
-    /// @param value Amount approved
-    function approve(address spender, uint256 value) public returns (bool success) {
+    function renounceOwnership() external onlyOwner {
+        emit OwnershipTransferred(owner, address(0));
+        owner = address(0);
+    }
+
+    // --- Parameter controls (only before finalize) ---
+    function setBurnBps(uint256 _bps) external onlyOwner {
+        require(!finalized, "Params locked");
+        require(_bps <= MAX_BURN_BPS, "Burn too high");
+        uint256 old = burnBps;
+        burnBps = _bps;
+        emit BurnBpsUpdated(old, _bps);
+    }
+
+    function setFeeExempt(address account, bool exempt) external onlyOwner {
+        require(!finalized, "Params locked");
+        isFeeExempt[account] = exempt;
+        emit FeeExemptUpdated(account, exempt);
+    }
+
+    /// Permanently lock parameter changes (burn bps + fee exemptions).
+    /// After calling this, you may optionally renounce ownership to freeze everything, including rescue.
+    function finalize() external onlyOwner {
+        require(!finalized, "Already finalized");
+        finalized = true;
+        emit Finalized();
+    }
+
+    // --- ERC20 core ---
+    function approve(address spender, uint256 value) external returns (bool) {
         allowance[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
     }
 
-    /// @notice Transfer tokens from one address to another using allowance
-    /// @param from Sender address
-    /// @param to Recipient address
-    /// @param value Amount to transfer
-    function transferFrom(address from, address to, uint256 value) public returns (bool success) {
-        require(balanceOf[from] >= value, "Insufficient balance");
-        require(allowance[from][msg.sender] >= value, "Allowance exceeded");
-
-        uint256 taxAmount = (value * taxPercent) / 100;
-        uint256 burnAmount = (value * burnPercent) / 100;
-        uint256 finalAmount = value - taxAmount - burnAmount;
-
-        balanceOf[from] -= value;
-        allowance[from][msg.sender] -= value;
-        balanceOf[to] += finalAmount;
-        balanceOf[taxWallet] += taxAmount;
-        totalSupply -= burnAmount;
-
-        emit Transfer(from, to, finalAmount);
-        emit Transfer(from, taxWallet, taxAmount);
-        emit Transfer(from, address(0), burnAmount);
+    function transfer(address to, uint256 value) external returns (bool) {
+        _transferWithBurn(msg.sender, to, value);
         return true;
     }
 
-    /// @notice (Optional) Update tax wallet address (only owner)
-    /// @param _newTaxWallet New tax wallet address
-    function updateTaxWallet(address _newTaxWallet) external onlyOwner {
-        taxWallet = _newTaxWallet;
+    function transferFrom(address from, address to, uint256 value) external returns (bool) {
+        uint256 allowed = allowance[from][msg.sender];
+        require(allowed >= value, "Allowance exceeded");
+        if (allowed != type(uint256).max) {
+            allowance[from][msg.sender] = allowed - value;
+            emit Approval(from, msg.sender, allowance[from][msg.sender]);
+        }
+        _transferWithBurn(from, to, value);
+        return true;
     }
 
-    /// @notice (Optional) Update tax and burn percentages (only owner)
-    /// @param _taxPercent New tax percentage
-    /// @param _burnPercent New burn percentage
-    function updatePercents(uint256 _taxPercent, uint256 _burnPercent) external onlyOwner {
-        taxPercent = _taxPercent;
-        burnPercent = _burnPercent;
+    // --- Internal transfer with optional burn ---
+    function _transferWithBurn(address from, address to, uint256 value) internal {
+        require(to != address(0), "Zero to");
+        require(balanceOf[from] >= value, "Insufficient balance");
+
+        // If burn is disabled or either side is exempt, do a plain transfer
+        if (burnBps == 0 || isFeeExempt[from] || isFeeExempt[to]) {
+            balanceOf[from] -= value;
+            balanceOf[to]   += value;
+            emit Transfer(from, to, value);
+            return;
+        }
+
+        uint256 burnAmount = (value * burnBps) / 10_000; // bps to percentage
+        uint256 sendAmount = value - burnAmount;
+
+        // Debit total from sender
+        balanceOf[from] -= value;
+
+        // Burn portion
+        if (burnAmount > 0) {
+            totalSupply -= burnAmount;
+            emit Transfer(from, address(0), burnAmount);
+        }
+
+        // Credit net to recipient
+        balanceOf[to] += sendAmount;
+        emit Transfer(from, to, sendAmount);
+    }
+
+    // --- Rescue non-native tokens (cannot rescue B2T itself) ---
+    function rescueTokens(address token, uint256 amount, address to) external onlyOwner {
+        require(token != address(this), "Cannot rescue B2T");
+        require(to != address(0), "Zero to");
+        IERC20Minimal(token).transfer(to, amount);
     }
 }

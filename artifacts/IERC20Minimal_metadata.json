@@ -1,0 +1,71 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"notice": "B2 Token (B2T) Key properties: - Fixed supply: 21,000,000 B2T (18 decimals), minted to deployer at construction. - No tax (no tax wallet). - Transfer burn in basis points (bps). Example: 100 = 1.00%. Capped by MAX_BURN_BPS. - Fee exemptions for specific addresses (e.g., deployer, vault, founder, LP pair) to avoid burn on setup flows. - finalize(): permanently locks parameter changes (burn bps + fee exemptions). - Simple ownership (transfer/renounce). - Rescue function for non-B2T tokens accidentally sent to the contract.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/B2T.sol": "IERC20Minimal"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/B2T.sol": {
+			"keccak256": "0x313a25164a788ac7d1e7b5dc6c2247f1d2e129f59fa41b1569126b9f7d0d4bb4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5ce223b06a78f2c90c9ea8f3002cb2327a9ecb25ff122fb00e2d4ca55a0ca543",
+				"dweb:/ipfs/QmexL5tpPjA69jysn7VNbDVYKHaxCnypKGDmxUFya8cFhM"
+			]
+		}
+	},
+	"version": 1
+}
