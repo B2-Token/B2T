@@ -10,7 +10,7 @@ With a fixed supply of 21 million tokens and no minting, B2T incentivizes long-t
 - **Tax:** 0% (No transaction tax)
 - **Burn:** 1% on every transfer
 - **Chain:** BNB Smart Chain (BEP20)
-- **Contract address:** [0x8fc4815EAd6d8d0ec93D6132f14c5E9eC85dfFae](https://bscscan.com/token/0x8fc4815EAd6d8d0ec93D6132f14c5E9eC85dfFae)
+- **Contract address:** [0x67A804abb2a46ca1699fe2E72081B92888d64dA9](https://bscscan.com/token/0x67A804abb2a46ca1699fe2E72081B92888d64dA9)
 - **No minting:** Fixed supply, no additional tokens can ever be minted
 
 ---
